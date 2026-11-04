@@ -1,0 +1,97 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1792277045895,
+      "tag": "0000_baseline",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1792279538593,
+      "tag": "0001_conversaciones_por_canal",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1792337633393,
+      "tag": "0002_auth_y_verificacion_email",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1792338954347,
+      "tag": "0003_descripcion_servicios",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1792342815726,
+      "tag": "0004_chat_estilo_e_idioma",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1792344927384,
+      "tag": "0005_idioma_usuario",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1792361977439,
+      "tag": "0006_agente_y_chat_activo",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1792408280626,
+      "tag": "0007_autor_del_equipo",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1792417326383,
+      "tag": "0008_plataforma_planes_y_estado",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1792419303942,
+      "tag": "0009_plataforma_soporte_y_estado_org",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1792427810267,
+      "tag": "0010_logo_y_privacidad",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1792596277535,
+      "tag": "0011_mensajes_de_sistema",
+      "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1793824337446,
+      "tag": "0012_pais_y_moneda",
+      "breakpoints": true
+    }
+  ]
+}

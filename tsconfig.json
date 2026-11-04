@@ -1,0 +1,11 @@
+{
+  // Revisa tipos de todo el repo (código y tests) contra el código fuente, sin compilar.
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "customConditions": ["@hablahora/source"]
+  },
+  "include": ["packages/*/src", "packages/*/test", "apps/*/src", "apps/*/test", "test"],
+  // código de navegador (React): lo revisan apps/chat y apps/console con su propio tsconfig
+  "exclude": ["apps/chat", "apps/console", "packages/ui"]
+}

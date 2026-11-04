@@ -1,0 +1,33 @@
+# Postgres de desarrollo de HablaHora. Puerto 5433 para no chocar con otros
+# Postgres de la máquina (el 5432 lo usa otro proyecto).
+name: hablahora
+
+services:
+  postgres:
+    image: postgres:17
+    container_name: hablahora-postgres
+    environment:
+      POSTGRES_DB: hablahora
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres_dev
+      APP_USER_PASSWORD: app_user_dev
+      AUTH_USER_PASSWORD: auth_user_dev
+    ports:
+      - "127.0.0.1:5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./docker/postgres/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      # por TCP: mientras se inicializa, Postgres solo escucha en el socket local
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U postgres -d hablahora"]
+      # cada 30 s en régimen; cada 2 s solo mientras arranca (db:up espera rápido).
+      # Revisar cada 2 s siempre cargaba la CPU de WSL sin necesidad.
+      interval: 30s
+      timeout: 3s
+      retries: 5
+      start_period: 60s
+      start_interval: 2s
+
+volumes:
+  pgdata:
+    name: hablahora-pgdata

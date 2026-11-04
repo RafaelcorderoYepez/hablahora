@@ -1,0 +1,19 @@
+{
+  "name": "@hablahora/core",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "@hablahora/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.133.0",
+    "@hablahora/contracts": "*",
+    "luxon": "^3.7.2",
+    "pg": "^8.23.1"
+  }
+}

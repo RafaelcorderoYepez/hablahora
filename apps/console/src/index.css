@@ -1,0 +1,9 @@
+@import "tailwindcss";
+@import "@hablahora/ui/styles.css";
+
+/* clases que usan los componentes de la marca */
+@source "../../../packages/ui/src";
+
+body {
+  margin: 0;
+}

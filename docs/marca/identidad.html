@@ -1,0 +1,322 @@
+<title>Marca HablaHora</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&display=swap">
+<style>
+/* Layout: hoja de marca en una columna ancha; cada sección es una banda con su muestra viva a la derecha. */
+:root {
+  --pacifico: #0B6B6B;
+  --pacifico-strong: #085453;
+  --mandarina: #F08A3C;
+  --bruma: #F3F6F5;
+  --tinta: #13282B;
+
+  --bg: var(--bruma);
+  --surface: #FAFCFB;
+  --raised: #FFFFFF;
+  --ink: var(--tinta);
+  --muted: #5B6F70;
+  --line: #D9E3E1;
+  --brand-text: var(--pacifico);
+  --brand-fill: var(--pacifico);
+  --on-brand: #FFFFFF;
+  --bubble-them: #FFFFFF;
+
+  --success: #2A6B37; --success-bg: #E0EEE2;
+  --info: #2456A6; --info-bg: #DFE8F6;
+  --warning: #8F5600; --warning-bg: #F6E8C8;
+  --danger: #9B1C24; --danger-bg: #F7DADC;
+
+  --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body: "Figtree", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #0E1B1D; --surface: #15262A; --raised: #1A2E32; --ink: #E6EFEE; --muted: #9DB2B1; --line: #27393C;
+    --brand-text: #5FC4BE; --brand-fill: #0F7C7A; --bubble-them: #1A2E32;
+    --success: #79C98A; --success-bg: #1B3322; --info: #8DB4F0; --info-bg: #1A2A45;
+    --warning: #F4C76B; --warning-bg: #3D3018; --danger: #F2A0A6; --danger-bg: #43191D;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0E1B1D; --surface: #15262A; --raised: #1A2E32; --ink: #E6EFEE; --muted: #9DB2B1; --line: #27393C;
+  --brand-text: #5FC4BE; --brand-fill: #0F7C7A; --bubble-them: #1A2E32;
+  --success: #79C98A; --success-bg: #1B3322; --info: #8DB4F0; --info-bg: #1A2A45;
+  --warning: #F4C76B; --warning-bg: #3D3018; --danger: #F2A0A6; --danger-bg: #43191D;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink);
+  font: 400 16px/1.55 var(--body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 40px 72px;
+}
+.wrap { max-width: 1040px; margin: 0 auto; display: grid; gap: 56px; }
+h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
+h2 { font-size: 1.6rem; font-weight: 700; }
+h3 { font-size: 1.05rem; font-weight: 700; }
+p { margin: 0; max-width: 62ch; }
+.eyebrow { font: 600 0.75rem/1 var(--body); text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+.muted { color: var(--muted); }
+code, .mono { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.85em; font-variant-numeric: tabular-nums; }
+
+/* encabezado */
+header.hero { display: grid; gap: 20px; padding-bottom: 8px; border-bottom: 1px solid var(--line); padding-block-end: 40px; }
+.hero .logo-xl { font-size: clamp(2.6rem, 8vw, 4.6rem); }
+.hero p { font-size: 1.15rem; }
+
+/* logotipo */
+.wordmark { display: inline-flex; align-items: center; gap: 0.28em; font-family: var(--display); font-weight: 800; letter-spacing: -0.03em; line-height: 1; color: var(--ink); }
+.wordmark svg { height: 1.05em; width: 1.05em; flex: none; }
+.wordmark .hora { color: var(--brand-text); }
+.icon-bubble { fill: var(--brand-fill); }
+.icon-hand { stroke: #FFFFFF; }
+.icon-dot { fill: var(--mandarina); }
+
+section { display: grid; gap: 20px; }
+.section-head { display: grid; gap: 8px; }
+
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 16px; }
+.tile { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 28px; display: grid; gap: 14px; align-content: start; min-width: 0; }
+.tile.on-light { background: #F3F6F5; color: #13282B; border-color: #D9E3E1; }
+.tile.on-light .wordmark { color: #13282B; } .tile.on-light .wordmark .hora { color: #0B6B6B; } .tile.on-light .icon-bubble { fill: #0B6B6B; }
+.tile.on-dark { background: #0E1B1D; color: #E6EFEE; border-color: #27393C; }
+.tile.on-dark .wordmark { color: #E6EFEE; } .tile.on-dark .wordmark .hora { color: #5FC4BE; } .tile.on-dark .icon-bubble { fill: #0F7C7A; }
+.tile.on-dark .muted { color: #9DB2B1; } .tile.on-light .muted { color: #5B6F70; }
+.tile .wordmark { font-size: 2.2rem; }
+.icons { display: flex; align-items: end; gap: 20px; flex-wrap: wrap; }
+.icons svg { display: block; }
+.app-icon { width: 72px; height: 72px; border-radius: 18px; background: #0B6B6B; display: grid; place-items: center; }
+.app-icon svg .icon-bubble { fill: #FFFFFF; } .app-icon svg .icon-hand { stroke: #0B6B6B; }
+
+/* paleta */
+.swatches { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr)); gap: 12px; }
+.swatch { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--raised); display: grid; min-width: 0; }
+.swatch .chip { height: 96px; display: flex; align-items: end; padding: 10px 12px; font: 600 0.8rem/1 var(--body); }
+.swatch .meta { padding: 12px; display: grid; gap: 4px; font-size: 0.88rem; }
+.swatch .meta strong { font-family: var(--display); font-size: 1rem; }
+.semantics { display: flex; flex-wrap: wrap; gap: 8px; }
+.pill { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 999px; font: 600 0.85rem/1 var(--body); }
+.pill::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+
+/* tipografía */
+.type-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 16px; }
+.specimen { font-family: var(--display); font-weight: 800; font-size: 3.4rem; line-height: 1; letter-spacing: -0.03em; }
+.specimen.body { font-family: var(--body); font-weight: 500; letter-spacing: 0; }
+.scale { display: grid; gap: 10px; }
+.scale div { display: grid; grid-template-columns: 70px 1fr; gap: 12px; align-items: baseline; border-top: 1px solid var(--line); padding-top: 10px; }
+.scale .mono { color: var(--muted); }
+
+/* aplicaciones */
+.apps { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 16px; align-items: start; }
+.phone { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; overflow: hidden; display: grid; max-width: 400px; width: 100%; }
+.phone-head { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-bottom: 1px solid var(--line); background: var(--raised); }
+.avatar { width: 34px; height: 34px; border-radius: 50%; background: #B4416A; color: #fff; display: grid; place-items: center; font: 700 0.9rem/1 var(--display); }
+.phone-head .who { display: grid; line-height: 1.2; }
+.phone-head .who span { font-size: 0.8rem; color: var(--muted); }
+.thread { padding: 16px; display: grid; gap: 10px; }
+.msg { max-width: 82%; padding: 10px 14px; border-radius: 18px; font-size: 0.95rem; }
+.msg.me { justify-self: end; background: #B4416A; color: #fff; border-bottom-right-radius: 6px; }
+.msg.them { justify-self: start; background: var(--bubble-them); border: 1px solid var(--line); border-bottom-left-radius: 6px; }
+.slots { display: flex; flex-wrap: wrap; gap: 6px; }
+.slot { border: 1px solid #B4416A; color: var(--ink); border-radius: 999px; padding: 4px 10px; font-size: 0.85rem; font-variant-numeric: tabular-nums; }
+.powered { padding: 10px 16px 14px; font-size: 0.78rem; color: var(--muted); display: flex; align-items: center; gap: 6px; justify-content: center; }
+.powered .wordmark { font-size: 0.85rem; color: var(--muted); }
+.powered .wordmark .hora { color: var(--muted); }
+.powered .icon-bubble { fill: var(--muted); }
+
+.console { background: var(--raised); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; display: grid; min-width: 0; }
+.console-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 18px; border-bottom: 1px solid var(--line); }
+.console-top .wordmark { font-size: 1.3rem; }
+.console-body { padding: 18px; display: grid; gap: 14px; }
+.row { display: grid; grid-template-columns: 64px 1fr auto; gap: 12px; align-items: center; padding: 10px 0; border-top: 1px solid var(--line); font-size: 0.92rem; }
+.row .time { font-variant-numeric: tabular-nums; font-weight: 600; }
+.btn { display: inline-flex; align-items: center; justify-content: center; padding: 10px 16px; border-radius: 10px; font: 600 0.92rem/1 var(--body); border: 0; background: var(--brand-fill); color: var(--on-brand); cursor: pointer; }
+.btn:hover { background: var(--pacifico-strong); }
+.btn.ghost { background: transparent; color: var(--brand-text); border: 1px solid var(--line); }
+.btn:focus-visible { outline: 3px solid var(--mandarina); outline-offset: 2px; }
+
+/* voz */
+.voice { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 16px; }
+.say { display: grid; gap: 8px; padding: 18px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); }
+.say .tag { font: 600 0.75rem/1 var(--body); letter-spacing: 0.08em; text-transform: uppercase; }
+.say.yes .tag { color: var(--success); }
+.say.no .tag { color: var(--danger); }
+ul.rules { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; max-width: 70ch; }
+
+footer { border-top: 1px solid var(--line); padding-top: 20px; font-size: 0.88rem; color: var(--muted); }
+@media (prefers-reduced-motion: no-preference) {
+  .hero .icon-hand.min { transform-origin: 24px 21px; animation: tick 6s ease-in-out 0.4s 1 both; }
+  @keyframes tick { from { transform: rotate(-90deg); } to { transform: rotate(0deg); } }
+}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="hh-icon" viewBox="0 0 48 48">
+      <path class="icon-bubble" d="M16 4H32A12 12 0 0 1 44 16V26A12 12 0 0 1 32 38H19L10.2 44.6C9 45.5 7.4 44.5 7.7 43L9 36.2A12 12 0 0 1 4 26V16A12 12 0 0 1 16 4Z"/>
+      <path class="icon-hand" d="M24 21V12.5M24 21H31.5" fill="none" stroke-width="3.6" stroke-linecap="round"/>
+      <circle class="icon-dot" cx="24" cy="21" r="2.7"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="wrap">
+  <header class="hero">
+    <span class="eyebrow">Identidad de marca · versión 1 · noviembre 2026</span>
+    <span class="wordmark logo-xl" role="img" aria-label="HablaHora">
+      <svg viewBox="0 0 48 48" aria-hidden="true">
+        <path class="icon-bubble" d="M16 4H32A12 12 0 0 1 44 16V26A12 12 0 0 1 32 38H19L10.2 44.6C9 45.5 7.4 44.5 7.7 43L9 36.2A12 12 0 0 1 4 26V16A12 12 0 0 1 16 4Z"/>
+        <path class="icon-hand" d="M24 21V12.5" fill="none" stroke-width="3.6" stroke-linecap="round"/>
+        <path class="icon-hand min" d="M24 21H31.5" fill="none" stroke-width="3.6" stroke-linecap="round"/>
+        <circle class="icon-dot" cx="24" cy="21" r="2.7"/>
+      </svg>
+      <span>habla<span class="hora">hora</span></span>
+    </span>
+    <p>Pide hora conversando. HablaHora es el agente que atiende el chat de cada negocio y deja la reserva hecha en su agenda. La marca junta las dos ideas: un globo de conversación con las manecillas de un reloj adentro.</p>
+  </header>
+
+  <section>
+    <div class="section-head">
+      <span class="eyebrow">Logotipo</span>
+      <h2>Ícono y palabra</h2>
+      <p class="muted">Siempre en minúsculas y en una sola palabra. "habla" va en el color del texto y "hora" en Pacífico. En textos corridos se escribe HablaHora.</p>
+    </div>
+    <div class="grid-2">
+      <div class="tile on-light">
+        <span class="wordmark"><svg aria-hidden="true"><use href="#hh-icon"/></svg><span>habla<span class="hora">hora</span></span></span>
+        <span class="muted">Sobre fondo claro</span>
+      </div>
+      <div class="tile on-dark">
+        <span class="wordmark"><svg aria-hidden="true"><use href="#hh-icon"/></svg><span>habla<span class="hora">hora</span></span></span>
+        <span class="muted">Sobre fondo oscuro</span>
+      </div>
+    </div>
+    <div class="tile">
+      <h3>El ícono solo</h3>
+      <div class="icons">
+        <div class="app-icon"><svg width="44" height="44" aria-hidden="true"><use href="#hh-icon"/></svg></div>
+        <svg width="48" height="48" aria-label="Ícono 48 px"><use href="#hh-icon"/></svg>
+        <svg width="32" height="32" aria-label="Ícono 32 px"><use href="#hh-icon"/></svg>
+        <svg width="20" height="20" aria-label="Ícono 20 px"><use href="#hh-icon"/></svg>
+      </div>
+      <p class="muted">Ícono de app, encabezados compactos y favicon. El punto Mandarina en el eje del reloj es el único lugar donde la marca usa ese color de forma fija. Es un logo provisorio: cuando tengas el definitivo se cambia en un solo archivo.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <span class="eyebrow">Color</span>
+      <h2>Paleta</h2>
+      <p class="muted">Un verde azulado profundo como color principal, un acento cálido que se usa poco y neutros con un leve tinte del principal. Todos los textos cumplen contraste AA en modo claro y oscuro.</p>
+    </div>
+    <div class="swatches">
+      <div class="swatch"><div class="chip" style="background:#0B6B6B;color:#fff">Aa 6,3:1</div><div class="meta"><strong>Pacífico</strong><span class="mono">#0B6B6B</span><span class="muted">Botones, enlaces, "hora" del logo</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#085453;color:#fff">Aa 8,7:1</div><div class="meta"><strong>Pacífico profundo</strong><span class="mono">#085453</span><span class="muted">Hover y texto chico de marca</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#F08A3C;color:#13282B">Aa 6,2:1</div><div class="meta"><strong>Mandarina</strong><span class="mono">#F08A3C</span><span class="muted">Detalles: eje del logo, foco, avisos nuevos. Nunca texto sobre claro</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#13282B;color:#F3F6F5">Aa 14,1:1</div><div class="meta"><strong>Tinta</strong><span class="mono">#13282B</span><span class="muted">Texto principal; fondo del modo oscuro: <span class="mono">#0E1B1D</span></span></div></div>
+      <div class="swatch"><div class="chip" style="background:#F3F6F5;color:#13282B;border-bottom:1px solid #D9E3E1">Fondo</div><div class="meta"><strong>Bruma</strong><span class="mono">#F3F6F5</span><span class="muted">Fondo del modo claro; superficies <span class="mono">#FAFCFB</span></span></div></div>
+    </div>
+    <div class="tile">
+      <h3>Estados</h3>
+      <div class="semantics">
+        <span class="pill" style="background:var(--success-bg);color:var(--success)">Confirmada</span>
+        <span class="pill" style="background:var(--info-bg);color:var(--info)">Apartada</span>
+        <span class="pill" style="background:var(--warning-bg);color:var(--warning)">Paso a humano</span>
+        <span class="pill" style="background:var(--danger-bg);color:var(--danger)">Cancelada</span>
+      </div>
+      <p class="muted">Los colores de estado son independientes del color de la marca: verde hoja, azul, ámbar y rojo, cada uno con su fondo suave.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <span class="eyebrow">Tipografía</span>
+      <h2>Dos familias</h2>
+    </div>
+    <div class="type-grid">
+      <div class="tile">
+        <span class="specimen">Aa Hh</span>
+        <h3>Bricolage Grotesque</h3>
+        <p class="muted">Títulos y logotipo, en 700 y 800. Tiene carácter sin perder legibilidad. Se usa con moderación: títulos, números grandes y la marca.</p>
+      </div>
+      <div class="tile">
+        <span class="specimen body">Aa Hh</span>
+        <h3>Figtree</h3>
+        <p class="muted">Todo lo demás, en 400, 500 y 600. Es cercana y muy clara en pantallas chicas, que es donde se usa el chat.</p>
+      </div>
+    </div>
+    <div class="tile scale">
+      <div><span class="mono">32 / 700</span><span style="font:700 2rem/1.1 var(--display);letter-spacing:-0.01em">Agenda del jueves</span></div>
+      <div><span class="mono">20 / 700</span><span style="font:700 1.25rem/1.2 var(--display)">Conversaciones con paso a humano</span></div>
+      <div><span class="mono">16 / 400</span><span>Camila tiene 3 horas libres después de las 15:00.</span></div>
+      <div><span class="mono">13 / 600</span><span style="font:600 0.8rem/1 var(--body);letter-spacing:0.08em;text-transform:uppercase">Reservas de hoy</span></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <span class="eyebrow">En uso</span>
+      <h2>Chat y consola</h2>
+      <p class="muted">El chat se pinta con el color que elige cada negocio (aquí, Rosa empolvado); HablaHora solo aparece al pie. La consola usa la paleta de la marca.</p>
+    </div>
+    <div class="apps">
+      <div class="phone" aria-label="Ejemplo del chat de un negocio">
+        <div class="phone-head">
+          <span class="avatar">A</span>
+          <span class="who"><strong>Salón Aurora</strong><span>Providencia · responde al tiro</span></span>
+        </div>
+        <div class="thread">
+          <div class="msg me">Hola, ¿me das hora para corte el jueves en la tarde?</div>
+          <div class="msg them">¡Hola! El jueves 6 tengo estas horas con Camila:
+            <div class="slots" style="margin-top:8px"><span class="slot">15:00</span><span class="slot">16:30</span><span class="slot">17:15</span></div>
+          </div>
+          <div class="msg me">La de las 16:30</div>
+          <div class="msg them">Te la aparté por 5 minutos. Corte de mujer, jueves 6 a las 16:30 con Camila, $18.000. ¿La confirmo?</div>
+        </div>
+        <div class="powered">Atiende <span class="wordmark"><svg aria-hidden="true"><use href="#hh-icon"/></svg><span>habla<span class="hora">hora</span></span></span></div>
+      </div>
+
+      <div class="console" aria-label="Ejemplo de la consola">
+        <div class="console-top">
+          <span class="wordmark"><svg aria-hidden="true"><use href="#hh-icon"/></svg><span>habla<span class="hora">hora</span></span></span>
+          <span class="muted" style="font-size:.88rem">Salón Aurora</span>
+        </div>
+        <div class="console-body">
+          <span class="eyebrow">Jueves 6 de noviembre</span>
+          <h3 style="font-size:1.3rem">Agenda de hoy</h3>
+          <div>
+            <div class="row"><span class="time">10:00</span><span>Valentina Rojas · Corte y brushing</span><span class="pill" style="background:var(--success-bg);color:var(--success)">Confirmada</span></div>
+            <div class="row"><span class="time">12:15</span><span>Diego Muñoz · Corte de hombre</span><span class="pill" style="background:var(--success-bg);color:var(--success)">Confirmada</span></div>
+            <div class="row"><span class="time">16:30</span><span>Josefa Pérez · Corte de mujer</span><span class="pill" style="background:var(--info-bg);color:var(--info)">Apartada</span></div>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="b1" type="button">Nueva reserva</button><button class="btn ghost" id="b2" type="button">Ver conversaciones</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <span class="eyebrow">Voz</span>
+      <h2>Cómo habla HablaHora</h2>
+    </div>
+    <ul class="rules">
+      <li>Tutea, con español de Chile claro y sin modismos que confundan: "pedir hora", "te la aparté", "¿la confirmo?".</li>
+      <li>Frases cortas y concretas: día, hora, servicio, persona y precio, siempre juntos antes de confirmar.</li>
+      <li>Precios en pesos chilenos con punto de miles (<span class="mono">$18.000</span>) y horas en formato de 24 horas (<span class="mono">16:30</span>).</li>
+      <li>En inglés, el mismo tono: cercano y directo.</li>
+    </ul>
+    <div class="voice">
+      <div class="say yes"><span class="tag">Así</span><p>Te la aparté por 5 minutos. Corte de mujer, jueves 6 a las 16:30 con Camila. ¿La confirmo?</p></div>
+      <div class="say no"><span class="tag">No así</span><p>Su solicitud de agendamiento ha sido procesada exitosamente y se encuentra pendiente de confirmación.</p></div>
+    </div>
+  </section>
+
+  <footer>HablaHora · hablahora.cl · Propuesta de identidad para aprobar antes de aplicarla al código.</footer>
+</div>

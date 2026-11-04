@@ -1,0 +1,38 @@
+{
+  "name": "hablahora",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "build": "tsc -b tsconfig.build.json && npm run build -w @hablahora/chat && npm run build -w @hablahora/console",
+    "typecheck": "tsc -p tsconfig.json && tsc -p apps/chat/tsconfig.json && tsc -p apps/console/tsconfig.json",
+    "test": "vitest run",
+    "dev": "node scripts/dev.mjs",
+    "start": "npm start -w @hablahora/api",
+    "db:up": "docker compose up -d --wait",
+    "db:down": "docker compose down",
+    "db:migrate": "npm run build && npm run migrate -w @hablahora/db",
+    "db:seed": "npm run build && npm run seed -w @hablahora/db && npm run seed:users -w @hablahora/api",
+    "db:new": "npm run new -w @hablahora/db --",
+    "db:psql": "docker compose exec postgres psql -U postgres -d hablahora",
+    "e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "@types/luxon": "^3.7.6",
+    "@types/node": "^26.6.5",
+    "@types/pg": "^8.23.1",
+    "embedded-postgres": "17.10.0-beta.17",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.3"
+  },
+  "overrides": {
+    "recharts": {
+      "react-is": "19.3.0"
+    }
+  }
+}

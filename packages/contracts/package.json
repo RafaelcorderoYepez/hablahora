@@ -1,0 +1,22 @@
+{
+  "name": "@hablahora/contracts",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "@hablahora/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./browser": {
+      "@hablahora/source": "./src/browser.ts",
+      "types": "./dist/browser.d.ts",
+      "default": "./dist/browser.js"
+    }
+  },
+  "dependencies": {
+    "zod": "^4.6.7"
+  },
+  "sideEffects": false
+}

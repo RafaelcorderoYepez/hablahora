@@ -1,0 +1,25 @@
+{
+  "name": "@hablahora/db",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "@hablahora/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "migrate": "node --env-file-if-exists=../../.env dist/cli.js",
+    "new": "drizzle-kit generate --custom --name",
+    "seed": "node --env-file-if-exists=../../.env dist/seed-cli.js"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.45.4",
+    "pg": "^8.23.1"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.31.11"
+  }
+}

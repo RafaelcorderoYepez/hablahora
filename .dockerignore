@@ -1,0 +1,15 @@
+# lo que no entra a la imagen (se compila adentro)
+**/node_modules
+**/dist
+# con estos, tsc -b cree que ya compiló y no genera dist/
+**/*.tsbuildinfo
+.git
+.github
+.vscode
+.env
+.env.*
+!.env.example
+*.log
+test-results
+playwright-report
+e2e/.auth

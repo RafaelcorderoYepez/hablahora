@@ -1,0 +1,102 @@
+/*
+ * Marca HablaHora: colores, fuentes y modo oscuro (docs/marca/).
+ * Uso: @import "tailwindcss"; @import "@hablahora/ui/styles.css";
+ * Las variables tienen nombres neutros (--ui-*): otra marca solo cambia los valores.
+ * El color del negocio (--ui-accent) lo fija cada app en tiempo de ejecución.
+ */
+@import "@fontsource-variable/bricolage-grotesque/index.css"; /* títulos y logotipo */
+@import "@fontsource/figtree/latin-400.css"; /* latín: cubre español e inglés */
+@import "@fontsource/figtree/latin-500.css";
+@import "@fontsource/figtree/latin-600.css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* .light fija el modo claro dentro de una página oscura (p. ej. una vista previa) */
+:root,
+.light {
+  /* marca */
+  --ui-brand: #0b6b6b; /* Pacífico: blanco encima 6,3:1 */
+  --ui-brand-strong: #085453; /* hover y texto chico de marca sobre claro (8,0:1) */
+  --ui-highlight: #f08a3c; /* Mandarina: detalles (eje del logo, foco); nunca texto sobre claro */
+  --ui-ink-base: #13282b; /* Tinta */
+  --ui-mist: #f3f6f5; /* Bruma */
+
+  /* modo claro */
+  --ui-bg: var(--ui-mist);
+  --ui-surface: #fafcfb;
+  --ui-raised: #ffffff;
+  --ui-ink: var(--ui-ink-base);
+  --ui-muted: #5b6f70;
+  --ui-line: #d9e3e1;
+  --ui-brand-text: var(--ui-brand);
+  --ui-success: #2a6b37;
+  --ui-success-bg: #e0eee2;
+  --ui-warning: #8f5600;
+  --ui-warning-bg: #f6e8c8;
+  --ui-info: #2456a6;
+  --ui-info-bg: #dfe8f6;
+  --ui-danger: #9b1c24;
+  --ui-danger-bg: #f7dadc;
+
+  /* color del negocio: la app fija --ui-accent-light y --ui-accent-dark */
+  --ui-accent: var(--ui-accent-light, var(--ui-brand));
+}
+
+.dark {
+  color-scheme: dark;
+  --ui-bg: #0e1b1d;
+  --ui-surface: #15262a;
+  --ui-raised: #1a2e32;
+  --ui-ink: #e6efee;
+  --ui-muted: #9db2b1;
+  --ui-line: #27393c;
+  --ui-brand-text: #5fc4be; /* Pacífico para texto sobre el fondo oscuro (8,5:1) */
+  --ui-success: #79c98a;
+  --ui-success-bg: #1b3322;
+  --ui-warning: #f4c76b;
+  --ui-warning-bg: #3d3018;
+  --ui-info: #8db4f0;
+  --ui-info-bg: #1a2a45;
+  --ui-danger: #f2a0a6;
+  --ui-danger-bg: #43191d;
+  --ui-accent: var(--ui-accent-dark, var(--ui-accent-light, var(--ui-brand)));
+}
+
+@theme inline {
+  --font-sans: "Figtree", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --font-display: "Bricolage Grotesque Variable", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+
+  --color-brand: var(--ui-brand);
+  --color-brand-strong: var(--ui-brand-strong);
+  --color-brand-text: var(--ui-brand-text);
+  --color-highlight: var(--ui-highlight);
+  --color-bg: var(--ui-bg);
+  --color-surface: var(--ui-surface);
+  --color-raised: var(--ui-raised);
+  --color-ink: var(--ui-ink);
+  --color-muted: var(--ui-muted);
+  --color-line: var(--ui-line);
+  --color-accent: var(--ui-accent);
+  --color-success: var(--ui-success);
+  --color-success-bg: var(--ui-success-bg);
+  --color-warning: var(--ui-warning);
+  --color-warning-bg: var(--ui-warning-bg);
+  --color-info: var(--ui-info);
+  --color-info-bg: var(--ui-info-bg);
+  --color-danger: var(--ui-danger);
+  --color-danger-bg: var(--ui-danger-bg);
+}
+
+@layer base {
+  html {
+    background: var(--ui-bg);
+    color: var(--ui-ink);
+    font-family: var(--font-sans);
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+  }
+}
