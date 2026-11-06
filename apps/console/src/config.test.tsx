@@ -20,7 +20,7 @@ const BUSINESS = {
   agentHandoffEn: null,
   webChatSlug: "salon-aurora",
   chatEnabled: true,
-  chatSettings: { palette: "rosa", accent: null, appearance: "auto", welcome: { es: null, en: null } },
+  chatSettings: { palette: "rosa", accent: null, appearance: "auto", tint: false, texture: "none", welcome: { es: null, en: null } },
 };
 const STAFF = [
   { id: "s-valeria", name: "Valeria", active: true, serviceIds: ["svc-corte"], schedule: null },
@@ -329,8 +329,22 @@ describe("chat web", () => {
     fireEvent.click(save);
     await waitFor(() => expect(sent("PATCH", "/api/merchant/business")).toHaveLength(1));
     expect(sent("PATCH", "/api/merchant/business")[0].body).toEqual({
-      chatSettings: { palette: "custom", accent: "#1F5F7A", appearance: "auto", welcome: { es: null, en: null } },
+      chatSettings: { palette: "custom", accent: "#1F5F7A", appearance: "auto", tint: false, texture: "none", welcome: { es: null, en: null } },
     });
+  });
+
+  it("el fondo del chat se ve en la vista previa y se guarda", async () => {
+    api({});
+    renderAt("/chat-web");
+    fireEvent.click(await screen.findByRole("switch", { name: "Fondo teñido" }));
+    fireEvent.click(screen.getByRole("radio", { name: "Cuadrícula" }));
+
+    const preview = screen.getByLabelText("Vista previa").querySelector<HTMLElement>(".chat-backdrop");
+    expect(preview?.dataset).toMatchObject({ tint: "true", texture: "grid" });
+
+    fireEvent.click(screen.getAllByRole("button", { name: "Guardar" }).at(-1) as HTMLButtonElement);
+    await waitFor(() => expect(sent("PATCH", "/api/merchant/business")).toHaveLength(1));
+    expect(sent("PATCH", "/api/merchant/business")[0].body).toMatchObject({ chatSettings: { tint: true, texture: "grid" } });
   });
 
   it("un enlace ocupado se explica junto al campo", async () => {

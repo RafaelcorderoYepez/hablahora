@@ -1,3 +1,4 @@
+import type { ChatTexture } from "@hablahora/contracts";
 import { Button, cn, BrandMark, BrandWordmark } from "@hablahora/ui";
 import { Composer } from "./components/Composer.js";
 import { Header } from "./components/Header.js";
@@ -58,7 +59,7 @@ export function App({ slug, embedded = false }: { slug: string; embedded?: boole
   const { info } = chat.state;
   const welcome = info.welcome[chat.locale] ?? t.welcome(info.name);
   return (
-    <Shell>
+    <Shell tint={info.tint} texture={info.texture}>
       <Header
         name={info.name}
         logoUrl={info.logoUrl}
@@ -89,18 +90,29 @@ export function App({ slug, embedded = false }: { slug: string; embedded?: boole
   );
 }
 
+/** El fondo del negocio se conoce al cargar su información; antes, el fondo neutro. */
+type ShellProps = { children: React.ReactNode; tint?: boolean; texture?: ChatTexture };
+
 /** Columna del chat: pantalla completa en el teléfono, centrada en la computadora. */
-function PageShell({ children }: { children: React.ReactNode }) {
+function PageShell({ children, tint, texture }: ShellProps) {
   return (
-    <main className="mx-auto flex h-dvh w-full max-w-2xl flex-col bg-bg text-ink sm:border-x sm:border-line">
+    <main
+      data-tint={tint}
+      data-texture={texture}
+      className="chat-backdrop mx-auto flex h-dvh w-full max-w-2xl flex-col text-ink sm:border-x sm:border-line"
+    >
       {children}
     </main>
   );
 }
 
 /** Dentro del panel de embed.js: ocupa todo el panel, sin bordes propios. */
-function EmbeddedShell({ children }: { children: React.ReactNode }) {
-  return <main className="flex h-dvh w-full flex-col bg-bg text-ink">{children}</main>;
+function EmbeddedShell({ children, tint, texture }: ShellProps) {
+  return (
+    <main data-tint={tint} data-texture={texture} className="chat-backdrop flex h-dvh w-full flex-col text-ink">
+      {children}
+    </main>
+  );
 }
 
 function Banner({ tone, children, action }: { tone: "info" | "warning" | "danger"; children: string; action?: React.ReactNode }) {

@@ -107,6 +107,14 @@ export const CHAT_PALETTES = [
   { id: "grafito", es: "Grafito", en: "Graphite", accent: "#222222" },
 ] as const;
 
+/** Texturas curadas del fondo del chat; se dibujan en `.chat-backdrop` (packages/ui/src/styles.css). */
+export const CHAT_TEXTURES = [
+  { id: "none", es: "Sin textura", en: "No texture" },
+  { id: "dots", es: "Puntos", en: "Dots" },
+  { id: "lines", es: "Líneas", en: "Lines" },
+  { id: "grid", es: "Cuadrícula", en: "Grid" },
+] as const;
+
 /** El color con el que se pinta el chat: el de la paleta, o el propio si eligió "custom". */
 export function resolveAccent(s: { palette: string; accent: string | null }): string {
   if (s.palette === "custom" && s.accent) return s.accent;

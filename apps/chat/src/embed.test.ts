@@ -18,7 +18,7 @@ function loadEmbed() {
 }
 
 const info = (available = true) =>
-  new Response(JSON.stringify({ name: "Salón Aurora", available, locale: "es", accent: "#B4416A", appearance: "auto", welcome: {} }), {
+  new Response(JSON.stringify({ name: "Salón Aurora", available, locale: "es", accent: "#B4416A", appearance: "auto", tint: false, texture: "none", welcome: {} }), {
     status: 200,
   });
 

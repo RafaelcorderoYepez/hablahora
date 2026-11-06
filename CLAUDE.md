@@ -105,6 +105,10 @@ Archivos estáticos: `@fastify/static`. Pruebas de punta a punta: Playwright (`e
   `favicon.svg`; nombre y fondos en `BRAND` (`contracts/browser`), que usan los correos. Nunca hex
   sueltos en componentes. El color de cada negocio es `accent` (paleta por defecto: Pacífico); el
   contraste se valida en `contracts`. `.light` / `.dark` fijan un modo dentro de la página (vistas previas).
+- Fondo del chat (`chat_settings.tint`, `.texture`; `CHAT_TEXTURES` en `contracts/browser`): la clase
+  `.chat-backdrop` de `styles.css`, la misma en el chat y en la vista previa de la consola. Solo gradientes
+  (sin archivos ni CSP). Lo que va sobre el fondo sin burbuja debe llegar a 4,5:1 con tinte y textura; lo
+  comprueba `packages/contracts/test/chat.test.ts`, leyendo los valores de `styles.css`.
 - Chat activo (`locations.chat_enabled`): apagado, el chat público responde 409 y muestra "no
   disponible". Solo se enciende con lo mínimo (servicio con profesional, horario, enlace).
 - Agente: tono (`agent_tone`), lo que debe saber (`agent_instructions` + `_en`) y cuándo pasar con

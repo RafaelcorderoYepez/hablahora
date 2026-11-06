@@ -40,6 +40,10 @@
 
   /* color del negocio: la app fija --ui-accent-light y --ui-accent-dark */
   --ui-accent: var(--ui-accent-light, var(--ui-brand));
+
+  /* fondo del chat: cuánto color lleva el tinte y con qué se dibuja la textura */
+  --ui-chat-tint: 8%;
+  --ui-chat-texture: color-mix(in srgb, var(--ui-accent) 8%, transparent);
 }
 
 .dark {
@@ -60,6 +64,8 @@
   --ui-danger: #f2a0a6;
   --ui-danger-bg: #43191d;
   --ui-accent: var(--ui-accent-dark, var(--ui-accent-light, var(--ui-brand)));
+  --ui-chat-tint: 12%;
+  --ui-chat-texture: color-mix(in srgb, var(--ui-ink) 7%, transparent);
 }
 
 @theme inline {
@@ -99,4 +105,28 @@
     font-family: var(--font-display);
     letter-spacing: -0.01em;
   }
+}
+
+/*
+ * Fondo del chat, el mismo en el chat y en la vista previa de la consola.
+ * Solo gradientes: sin archivos ni cambios en la CSP. Lo que va encima sin burbuja propia
+ * debe seguir legible (lo comprueba packages/contracts/test/chat.test.ts).
+ */
+.chat-backdrop {
+  background-color: var(--ui-bg);
+}
+.chat-backdrop[data-tint="true"] {
+  background-color: color-mix(in srgb, var(--ui-accent) var(--ui-chat-tint), var(--ui-bg));
+}
+.chat-backdrop[data-texture="dots"] {
+  background-image: radial-gradient(var(--ui-chat-texture) 1.5px, transparent 2px);
+  background-size: 16px 16px;
+}
+.chat-backdrop[data-texture="lines"] {
+  background-image: repeating-linear-gradient(45deg, var(--ui-chat-texture) 0 1px, transparent 1px 12px);
+}
+.chat-backdrop[data-texture="grid"] {
+  background-image: linear-gradient(var(--ui-chat-texture) 1px, transparent 1px),
+    linear-gradient(90deg, var(--ui-chat-texture) 1px, transparent 1px);
+  background-size: 22px 22px;
 }

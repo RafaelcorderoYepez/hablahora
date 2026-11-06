@@ -40,3 +40,24 @@ test("el cliente pide una persona, el equipo responde desde la consola y el clie
   // el chat consulta cada 5 s mientras el equipo atiende
   await expect(customer.getByText("Hola, soy Camila del Salón Aurora.")).toBeVisible({ timeout: 15_000 });
 });
+
+test("el negocio tiñe el fondo de su chat y le pone textura desde la consola", async ({ page, browser }) => {
+  await signIn(page, USERS.valeria);
+  await page.goto(`${CONSOLE}/chat-web`);
+  await page.getByRole("switch", { name: "Fondo teñido" }).click();
+  await page.getByRole("radio", { name: "Cuadrícula" }).check();
+  await page.getByRole("button", { name: "Guardar" }).last().click();
+  await expect(page.getByText("Guardado").first()).toBeVisible();
+
+  // jsdom no aplica estilos: esto comprueba el CSS real, con la CSP de producción
+  const customer = await (await browser.newContext({ locale: "es-MX" })).newPage();
+  await customer.goto(`${CHAT}/salon-aurora`);
+  const shell = customer.getByRole("main");
+  await expect(shell).toHaveAttribute("data-texture", "grid");
+  const style = await shell.evaluate((el) => {
+    const s = getComputedStyle(el);
+    return { color: s.backgroundColor, image: s.backgroundImage };
+  });
+  expect(style.color).not.toBe("rgb(243, 246, 245)"); // ya no es el fondo neutro
+  expect(style.image).toContain("linear-gradient");
+});

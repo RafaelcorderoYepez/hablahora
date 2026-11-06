@@ -158,7 +158,7 @@ Cada hito termina con tests en verde y algo que se puede probar a mano.
   - [x] Parte 2: panel general, uso y costo por negocio, salud (latencia, errores, paso a humano sin
     atender) y visor de conversaciones para soporte con registro de acceso; los cambios de usuarios
     de un negocio suspendido o dado de baja se bloquean en Better Auth.
-- [ ] **H7a. Marca HablaHora y Chile.** El producto pasa a llamarse HablaHora (repositorio propio,
+- [x] **H7a. Marca HablaHora y Chile.** El producto pasa a llamarse HablaHora (repositorio propio,
   dominio `hablahora.cl`) y el primer piloto es en Chile.
   - [x] Parte 1: identidad de marca (colores, fuentes, logo provisorio, voz) aplicada a las consolas, el
     chat y los correos; todo lo que identifica la marca en cuatro lugares (`styles.css`, `logo.tsx`,
@@ -169,7 +169,7 @@ Cada hito termina con tests en verde y algo que se puede probar a mano.
     por defecto en el alta; textos en español de Chile; el costo del modelo en la plataforma siempre
     como `US$`; Salón Aurora como negocio chileno de ejemplo.
   - [x] Parte 3: repositorio nuevo `hablahora` (historial anterior respaldado en un bundle y archivado).
-  - [ ] Parte 4: fondo del chat configurable por el negocio: fondo teñido con su color (un interruptor)
+  - [x] Parte 4: fondo del chat configurable por el negocio: fondo teñido con su color (un interruptor)
     y texturas curadas probadas en claro y oscuro. Una imagen propia queda para cuando un cliente la pida.
 - [ ] **H7. Despliegue y piloto.** Ambiente de staging, dominio, copias de seguridad,
   monitoreo de errores; un negocio piloto real.

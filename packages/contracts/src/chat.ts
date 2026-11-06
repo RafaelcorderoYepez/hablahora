@@ -5,6 +5,7 @@ import {
   accentForDark,
   BRAND,
   CHAT_PALETTES,
+  CHAT_TEXTURES,
   COUNTRIES,
   COUNTRY_CODES,
   CURRENCIES,
@@ -23,6 +24,7 @@ export {
   accentForDark,
   BRAND,
   CHAT_PALETTES,
+  CHAT_TEXTURES,
   COUNTRIES,
   COUNTRY_CODES,
   CURRENCIES,
@@ -44,6 +46,9 @@ export type PaletteId = z.infer<typeof PaletteId>;
 export const Appearance = z.enum(["light", "dark", "auto"]);
 export type Appearance = z.infer<typeof Appearance>;
 
+export const ChatTexture = z.enum(["none", "dots", "lines", "grid"]);
+export type ChatTexture = z.infer<typeof ChatTexture>;
+
 const Welcome = z.string().trim().min(1).max(300).nullable();
 
 export const ChatSettings = z
@@ -53,6 +58,10 @@ export const ChatSettings = z
     accent: HexColor.nullable().default(null),
     /** "auto" = como el dispositivo del cliente */
     appearance: Appearance.default("auto"),
+    /** fondo teñido con el color del negocio */
+    tint: z.boolean().default(false),
+    /** textura curada sobre el fondo */
+    texture: ChatTexture.default("none"),
     /** mensaje de bienvenida por idioma; null = uno genérico con el nombre del negocio */
     welcome: z.object({ es: Welcome.default(null), en: Welcome.default(null) }).strict().default({ es: null, en: null }),
   })
@@ -82,6 +91,8 @@ export const PublicChatInfo = z.object({
   locale: Locale,
   accent: HexColor,
   appearance: Appearance,
+  tint: z.boolean(),
+  texture: ChatTexture,
   welcome: z.object({ es: z.string().nullable(), en: z.string().nullable() }),
   /** logo del negocio (URL con versión); null = iniciales con el color del negocio */
   logoUrl: z.string().nullable(),

@@ -21,7 +21,7 @@ const BUSINESS = {
   agentHandoffEn: null,
   webChatSlug: "salon-aurora",
   chatEnabled: true,
-  chatSettings: { palette: "rosa", accent: null, appearance: "auto", welcome: { es: null, en: null } },
+  chatSettings: { palette: "rosa", accent: null, appearance: "auto", tint: false, texture: "none", welcome: { es: null, en: null } },
 };
 const VALERIA = "00000000-0000-4000-8000-000000000101";
 const CAMILA = "00000000-0000-4000-8000-000000000102";

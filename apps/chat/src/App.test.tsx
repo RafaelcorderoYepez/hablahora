@@ -13,6 +13,8 @@ const INFO = {
   locale: "es",
   accent: "#B4416A",
   appearance: "light",
+  tint: true,
+  texture: "dots",
   welcome: { es: "¡Hola! Soy el asistente del Salón Aurora.", en: "Hi! I'm Salón Aurora's assistant." },
   logoUrl: null,
   privacy: false,
@@ -79,6 +81,9 @@ describe("chat público", () => {
     expect(screen.getByText("SA")).toBeTruthy();
     expect(document.documentElement.style.getPropertyValue("--ui-accent-light")).toBe("#B4416A");
     expect(document.documentElement.classList.contains("dark")).toBe(false);
+    const shell = screen.getByRole("main");
+    expect(shell.classList.contains("chat-backdrop")).toBe(true);
+    expect(shell.dataset).toMatchObject({ tint: "true", texture: "dots" });
   });
 
   it("al escribir abre la sesión, muestra la respuesta en partes y separa lo que dice antes y después de una herramienta", async () => {

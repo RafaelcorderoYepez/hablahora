@@ -77,6 +77,8 @@ export class WebChatProcessor {
         locale: loc.defaultLocale,
         accent: resolveAccent(settings),
         appearance: settings.appearance,
+        tint: settings.tint,
+        texture: settings.texture,
         welcome: settings.welcome,
         logoUrl: logo ? logoUrl(slug, logo) : null,
         privacy: privacy.rows[0]?.has === true,

@@ -36,7 +36,8 @@ export function MessageList(props: {
         </Bubble>
       ))}
       {label ? (
-        <div className="flex items-center gap-2 px-1 py-0.5 text-xs text-muted" role="status">
+        // con píldora propia: sobre un fondo teñido, el texto secundario no llega al contraste mínimo
+        <div className="flex items-center gap-2 self-start rounded-full bg-raised px-2.5 py-1 text-xs text-muted" role="status">
           <span aria-hidden="true" className="flex gap-[3px]">
             {[0, 150, 300].map((delay) => (
               <i

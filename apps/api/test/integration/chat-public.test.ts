@@ -122,10 +122,16 @@ describe("datos públicos del negocio", () => {
     expect((await patch({ palette: "custom", accent: "#1F5F7A", appearance: "dark" })).statusCode).toBe(200);
     expect((await server.app.inject({ url: BASE })).json()).toMatchObject({ accent: "#1F5F7A", appearance: "dark" });
 
+    expect((await patch({ palette: "rosa", tint: true, texture: "dots" })).statusCode).toBe(200);
+    expect((await server.app.inject({ url: BASE })).json()).toMatchObject({ tint: true, texture: "dots" });
+    expect((await patch({ palette: "rosa", texture: "madera" })).statusCode).toBe(400);
+
     await patch({ palette: "salvia" });
     expect((await server.app.inject({ url: BASE })).json()).toMatchObject({
       accent: "#3F7056",
       appearance: "auto",
+      tint: false,
+      texture: "none",
       welcome: { es: null, en: null },
     });
   });

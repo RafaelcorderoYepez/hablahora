@@ -21,7 +21,7 @@ const BUSINESS = {
   agentHandoffEn: null,
   webChatSlug: "salon-aurora",
   chatEnabled: true,
-  chatSettings: { palette: "rosa", accent: null, appearance: "auto", welcome: { es: null, en: null } },
+  chatSettings: { palette: "rosa", accent: null, appearance: "auto", tint: false, texture: "none", welcome: { es: null, en: null } },
 };
 
 function metrics(url: URL) {

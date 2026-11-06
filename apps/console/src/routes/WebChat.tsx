@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { Business, ChatSettings } from "@hablahora/contracts";
-import { accentForDark, CHAT_PALETTES, contrastRatio, MIN_ACCENT_CONTRAST, resolveAccent } from "@hablahora/contracts/browser";
+import { accentForDark, CHAT_PALETTES, CHAT_TEXTURES, contrastRatio, MIN_ACCENT_CONTRAST, resolveAccent } from "@hablahora/contracts/browser";
 import { Button, buttonVariants, cn, Field, Input, SwitchField, Textarea } from "@hablahora/ui";
 import { Check, Copy, ExternalLink } from "lucide-react";
 import { useState } from "react";
@@ -222,7 +222,7 @@ function LinkAndEmbed({ business }: { business: Business }) {
   );
 }
 
-/** Estilo del chat: color (paleta o propio), apariencia, bienvenida; con vista previa. */
+/** Estilo del chat: color (paleta o propio), apariencia, fondo, bienvenida; con vista previa. */
 function StyleForm({ business }: { business: Business }) {
   const { t, locale } = useI18n();
   const w = t.cfg.webChat;
@@ -313,6 +313,16 @@ function StyleForm({ business }: { business: Business }) {
                   </label>
                 ))}
               </fieldset>
+              <SwitchField id="chat-tint" label={w.tint} hint={w.tintHint} checked={s.tint} onCheckedChange={(tint) => setS({ ...s, tint })} disabled={!canEdit} />
+              <fieldset className="flex flex-col gap-2">
+                <legend className="mb-1 text-sm font-semibold">{w.texture}</legend>
+                {CHAT_TEXTURES.map((x) => (
+                  <label key={x.id} className="flex items-center gap-2 text-sm">
+                    <input type="radio" name="texture" checked={s.texture === x.id} onChange={() => setS({ ...s, texture: x.id })} className="accent-[var(--ui-accent)]" />
+                    {x[locale]}
+                  </label>
+                ))}
+              </fieldset>
               <LangTabs
                 id="welcome"
                 es={
@@ -327,7 +337,7 @@ function StyleForm({ business }: { business: Business }) {
                 }
               />
             </div>
-            <Preview accent={accent} appearance={s.appearance} welcome={s.welcome[locale]?.trim() || null} name={business.name} />
+            <Preview accent={accent} appearance={s.appearance} tint={s.tint} texture={s.texture} welcome={s.welcome[locale]?.trim() || null} name={business.name} />
           </div>
           {canEdit ? (
             <div>
@@ -343,7 +353,14 @@ function StyleForm({ business }: { business: Business }) {
 }
 
 /** Vista previa del chat con el color y la apariencia elegidos (en "automático", claro y oscuro). */
-function Preview(props: { accent: string; appearance: ChatSettings["appearance"]; welcome: string | null; name: string }) {
+function Preview(props: {
+  accent: string;
+  appearance: ChatSettings["appearance"];
+  tint: boolean;
+  texture: ChatSettings["texture"];
+  welcome: string | null;
+  name: string;
+}) {
   const { t } = useI18n();
   const w = t.cfg.webChat;
   const modes = props.appearance === "auto" ? (["light", "dark"] as const) : ([props.appearance] as const);
@@ -355,7 +372,9 @@ function Preview(props: { accent: string; appearance: ChatSettings["appearance"]
           // .light / .dark fijan el modo de la vista previa con las mismas variables que el chat
           <div
             key={mode}
-            className={cn(mode, "flex w-56 flex-col gap-2 rounded-2xl border border-line bg-bg p-3 text-[0.8rem] text-ink")}
+            data-tint={props.tint}
+            data-texture={props.texture}
+            className={cn(mode, "chat-backdrop flex w-56 flex-col gap-2 rounded-2xl border border-line p-3 text-[0.8rem] text-ink")}
             style={{ "--ui-accent-light": props.accent, "--ui-accent-dark": accentForDark(props.accent) } as React.CSSProperties}
           >
             <div className="flex items-center gap-2">
