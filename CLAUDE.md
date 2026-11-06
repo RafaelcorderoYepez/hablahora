@@ -136,6 +136,9 @@ Archivos estáticos: `@fastify/static`. Pruebas de punta a punta: Playwright (`e
   `handoff` activo (mensaje `role: assistant`, `author: staff`, `author_user_id`), toma o devuelve.
   Al devolverla, el agente ve esas respuestas marcadas con `[Persona del equipo]` (`loadHistory`).
   Al pasar al equipo, correo a los administradores (`apps/api/src/handoff-notify.ts`, vía `onHandoff`).
+- Aviso de reservas al negocio (`apps/api/src/booking-notify.ts`, `BookingService.onChange`): correo a los
+  administradores cuando el cliente reserva, mueve o cancela una reserva firme, con sus datos y la agenda de
+  ese día. Después de la transacción y sin romperla si falla. Lo que hace el equipo (`staff*`) no se avisa.
   El costo del modelo no se muestra al negocio (es de la consola del owner).
 - Plataforma (`core/src/platform/*`, `apps/api/src/routes/platform.ts`, consola en `/plataforma`):
   `plans`, `platform_settings` y las columnas de estado, plan y modelo de `tenants` no tienen RLS

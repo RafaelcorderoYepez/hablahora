@@ -171,11 +171,31 @@ export interface HoldInput {
   preferredResourceId?: string;
 }
 
+/** Algo que hizo el cliente con una reserva firme; lo que hace el equipo desde la consola no se avisa. */
+export interface BookingChange {
+  tenantId: string;
+  bookingId: string;
+  /** "requested": quedó pendiente de que el negocio la confirme */
+  kind: "confirmed" | "requested" | "rescheduled" | "cancelled";
+  /** al mover: la reserva anterior */
+  previousBookingId?: string;
+}
+
 export class BookingService {
   constructor(
     private db: Db,
     private clock: () => Date = () => new Date(),
+    private onChange?: (change: BookingChange) => void | Promise<void>,
   ) {}
+
+  /** Después de la transacción. Si el aviso falla, la reserva ya quedó hecha y la herramienta debe decirlo. */
+  private async changed(change: BookingChange): Promise<void> {
+    try {
+      await this.onChange?.(change);
+    } catch (err) {
+      console.warn("[reservas] no se pudo avisar del cambio", err);
+    }
+  }
 
   async listServices(ctx: ConversationContext): Promise<ServiceRow[]> {
     return withTenant(this.db, ctx.tenantId, (tx) => listServices(tx, ctx.locationId));
@@ -297,7 +317,7 @@ export class BookingService {
 
   async confirmBooking(ctx: ConversationContext, bookingId: string): Promise<ConfirmResult> {
     if (!UUID.test(bookingId)) return { ok: false, reason: "not_found" };
-    return withTenant(this.db, ctx.tenantId, async (tx) => {
+    const result = await withTenant<ConfirmResult>(this.db, ctx.tenantId, async (tx) => {
       const now = this.clock();
       const b = await lockOwnBooking(tx, bookingId, await ownedCustomerIds(tx, ctx));
       if (!b) return { ok: false, reason: "not_found" };
@@ -315,11 +335,20 @@ export class BookingService {
       await logEvent(tx, ctx, b.id, status === "confirmed" ? "confirmed" : "requested");
       return { ok: true, booking: await this.view(tx, b.id) };
     });
+    if (result.ok) {
+      await this.changed({
+        tenantId: ctx.tenantId,
+        bookingId: result.booking.id,
+        kind: result.booking.status === "confirmed" ? "confirmed" : "requested",
+      });
+    }
+    return result;
   }
 
   async cancelBooking(ctx: ConversationContext, bookingId: string): Promise<CancelResult> {
     if (!UUID.test(bookingId)) return { ok: false, reason: "not_found" };
-    return withTenant(this.db, ctx.tenantId, async (tx) => {
+    let wasFirm = false; // soltar un apartado que nunca se confirmó no le interesa al negocio
+    const result = await withTenant<CancelResult>(this.db, ctx.tenantId, async (tx) => {
       const now = this.clock();
       const b = await lockOwnBooking(tx, bookingId, await ownedCustomerIds(tx, ctx));
       if (!b) return { ok: false, reason: "not_found" };
@@ -333,9 +362,12 @@ export class BookingService {
           return { ok: false, reason: "too_late", cutoffMinutes: policy.cancelCutoffMin };
         }
       }
+      wasFirm = b.status !== "hold";
       await setStatus(tx, ctx, b.id, "cancelled", now);
       return { ok: true, booking: await this.view(tx, b.id) };
     });
+    if (result.ok && wasFirm) await this.changed({ tenantId: ctx.tenantId, bookingId: result.booking.id, kind: "cancelled" });
+    return result;
   }
 
   /**
@@ -351,7 +383,7 @@ export class BookingService {
     if (!UUID.test(bookingId)) return { ok: false, reason: "not_found", alternatives: [] };
     validateDate(input.date);
     validateTime(input.time);
-    return withTenant(this.db, ctx.tenantId, async (tx) => {
+    const result = await withTenant<RescheduleResult>(this.db, ctx.tenantId, async (tx) => {
       const now = this.clock();
       const old = await lockOwnBooking(tx, bookingId, await ownedCustomerIds(tx, ctx));
       if (!old) return { ok: false, reason: "not_found", alternatives: [] };
@@ -414,6 +446,15 @@ export class BookingService {
       }
       return giveUp("slot_taken");
     });
+    if (result.ok) {
+      await this.changed({
+        tenantId: ctx.tenantId,
+        bookingId: result.booking.id,
+        kind: "rescheduled",
+        previousBookingId: result.previousBookingId,
+      });
+    }
+    return result;
   }
 
   async listMyBookings(ctx: ConversationContext): Promise<BookingView[]> {

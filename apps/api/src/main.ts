@@ -16,6 +16,7 @@ import {
 } from "@hablahora/core";
 import { createAuth } from "./auth.js";
 import { ConfigError, loadConfig, type Config } from "./config.js";
+import { bookingNotifier } from "./booking-notify.js";
 import { handoffNotifier } from "./handoff-notify.js";
 import { initMonitoring } from "./monitoring.js";
 import { usageNotifier } from "./usage-notify.js";
@@ -47,7 +48,6 @@ const db = new pg.Pool({ connectionString: config.databaseUrl }); // rol app_use
 // si la base se reinicia, el pool avisa con un error en una conexión libre: sin este
 // manejador Node cerraría la API entera; el pool vuelve a conectar solo
 db.on("error", (err) => console.error("[db] conexión perdida:", err.message));
-const bookings = new BookingService(db);
 // en desarrollo los correos (códigos, invitaciones) van al log; en producción, Postmark
 const email: EmailSender =
   config.email.provider === "postmark" ? new PostmarkEmailSender({ token: config.email.token, from: config.email.from }) : new LogEmailSender();
@@ -64,6 +64,7 @@ const { auth, pool: authDb } = createAuth({
 });
 const serverModel = config.anthropic.model;
 const notifyHandoff = handoffNotifier({ db, authDb, email, consoleURL, log });
+const bookings = new BookingService(db, undefined, bookingNotifier({ db, authDb, email, consoleURL, log }));
 const anthropic = new Anthropic({ apiKey: config.anthropic.apiKey });
 
 const runner = new AgentRunner({

@@ -13,8 +13,9 @@ export type {
   StaffActionFailure,
   StaffActionResult,
   CustomerNotice,
+  BookingChange,
 } from "./booking/service.js";
-export { bookingNoticeEmail, type BookingNoticeKind } from "./email/booking-notice.js";
+export { bookingAlertEmail, bookingNoticeEmail, type BookingAlert, type BookingNoticeKind } from "./email/booking-notice.js";
 export { bookingTools, saveCustomerContactTool, emailCodeTools, handleBookingTool, dateContextLine } from "./agent/tools.js";
 export { AgentRunner, requestHumanTool, errorReplyText, type LlmClient, type AgentEvent, type Effort } from "./agent/runner.js";
 export {

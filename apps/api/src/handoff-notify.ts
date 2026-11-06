@@ -1,5 +1,6 @@
 import { withTenant, type ConversationRow, type Db, type EmailSender } from "@hablahora/core";
 import type pg from "pg";
+import { organizationAdmins } from "./organization-admins.js";
 
 /**
  * Aviso a los administradores del negocio cuando el agente pasa una conversación
@@ -23,12 +24,7 @@ export function handoffNotifier(deps: { db: Db; authDb: pg.Pool; email: EmailSen
         return rows[0];
       });
       if (!biz?.auth_organization_id) return;
-      // administradores: dueño y administradores de la organización (Better Auth)
-      const { rows: admins } = await deps.authDb.query(
-        `SELECT u.email, u.name, u.locale FROM member m JOIN "user" u ON u.id = m."userId"
-          WHERE m."organizationId" = $1 AND (m.role ~ '(^|,)\\s*(owner|admin)\\s*(,|$)')`,
-        [biz.auth_organization_id],
-      );
+      const admins = await organizationAdmins(deps.authDb, biz.auth_organization_id);
       const link = `${deps.consoleURL.replace(/\/+$/, "")}/conversaciones/${conv.id}`;
       for (const a of admins) {
         const en = (a.locale ?? biz.default_locale) === "en";
